@@ -13,7 +13,6 @@ import java_cup.runtime.*;
 %{
     StringBuffer string = new StringBuffer();
 
-
     private Symbol symbol(int type) {
         return new Symbol(type, yyline, yycolumn);
     }
@@ -45,13 +44,23 @@ DecIntegerLiteral = 0 | [1-9][0-9]*
 %%
 
 /* keywords */
-<YYINITIAL> "abstract" {return symbol(sym.ABSTRACT);}
-<YYINITIAL> "boolean" {return symbol(sym.BOOLEAN);}
+<YYINITIAL> "bool" {return symbol(sym.BOOL);}
 <YYINITIAL> "break" {return symbol(sym.BREAK);}
 <YYINITIAL> "int" {return symbol(sym.INT);}
 <YYINITIAL> "float" {return symbol(sym.FLOAT);}
 <YYINITIAL> "string" {return symbol(sym.STRING);}
 <YYINITIAL> "char" {return symbol(sym.CHAR);}
+<YYINITIAL> "return" {return symbol(sym.RETURN);}
+<YYINITIAL> "arreglo" {return symbol(sym.ARREGLO);}
+<YYINITIAL> "$" {return symbol(sym.FINEXPRESION);}
+<YYINITIAL> "true" {return symbol(sym.TRUE);}
+<YYINITIAL> "false" {return symbol(sym.FALSE);}
+<YYINITIAL> "@" {return symbol(sym.COMENTARIO_SIMPLE);}
+
+
+
+
+
 
 <YYINITIAL> {
     /*identifiers*/
@@ -60,7 +69,8 @@ DecIntegerLiteral = 0 | [1-9][0-9]*
     /*literals*/
     {DecIntegerLiteral} {return symbol(sym.INTEGER_LITERAL, Integer.parserInt(yytext()));}
     \"                  {string.setLength(0); yybegin(CADENA);}
-    /*operators*/
+    
+    //Operators
     "=="    {return symbol(sym.EQEQ);}
     "="     {return symbol(sym.EQ);}
     "+"     {return symbol(sym.PLUS);}
@@ -69,12 +79,12 @@ DecIntegerLiteral = 0 | [1-9][0-9]*
     "/"     {return symbol(sym.DIVI);}
     "("     {return symbol(sym.LPAREN);}
     ")"     {return symbol(sym.RPAREN);}
-    "{"     {return symbol(sym.LBLOQUE);}
-    "}"     {return symbol(sym.RBLOQUE);}
-
-/*extra*/
+    "{"     {return symbol(sym.llavesCorcheteAbre);}
+    "}"     {return symbol(sym.llavesCorcheteCierra);}
     ";"     {return symbol(sym.SEMI);}
     ","     {return symbol(sym.COMA);}
+    "!"     {return symbol(sym.NEGACION);}
+    "^"     {return symbol(sym.CONJUNCION);}
 
     /*comments*/
     {Comment} {/*ignore*/}

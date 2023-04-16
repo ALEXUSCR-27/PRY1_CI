@@ -28,7 +28,7 @@ Identificador ::= letra (letra|digConCero)*
 "Definicion de tipos"
 tipoFuncion ::=  ‘int’ | ‘bool’ | ‘float’ | ‘char’ | ‘string’ | 'arreglo'
 tipoParametro ::= ‘int’ | ‘bool’ | ‘float’ | ‘char’ | ‘string’ | 'arreglo'
-tipoVar ::=  ‘int’ | ‘bool’ | ‘float’ | ‘char’ | ‘string’ | 'arreglo'
+tipoVariable ::=  ‘int’ | ‘bool’ | ‘float’ | ‘char’ | ‘string’ | 'arreglo'
 tipoArreglo ::= 'int' | 'char'
 tipoDatoEnviado ::= Identificador | literal | invocarFuncion
 
