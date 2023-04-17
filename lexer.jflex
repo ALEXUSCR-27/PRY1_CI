@@ -32,14 +32,14 @@ Comment  = {TraditionalComment} | {EndOfLineComment} | {DocumentationComment}
 TraditionalComment = "/*" [^*] ~"*/" | "/*" "*"+ "/" //esto cambia
 // Comment can be last line of the file, without line terminator.
 EndOfLineComment = "//" {InputCharacter}* {LineTerminator}?
-DocumentationComment = "/**" {CommentConten} "*"+ "/"
+DocumentationComment = "/**" {CommentContent} "*"+ "/"
 CommentContent = ([^*] | \*+ [^/*])*
 
 Identifier = [:jletter:] [:jletterdigit:]*
 
 DecIntegerLiteral = 0 | [1-9][0-9]*
 
-%state Cadena
+%state CADENA
 
 %%
 
@@ -113,7 +113,7 @@ DecIntegerLiteral = 0 | [1-9][0-9]*
     "!="    {return symbol(sym.NOT_EQ);}
     "**"    {return symbol(sym.POWER);}
     "~"     {return symbol(sym.MODULO);}
-    
+
 
     
 
