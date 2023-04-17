@@ -18,6 +18,9 @@ parentesisAbre  ::= '('
 parentesisCierra  ::= ')'
 finalExpresion ::= $
 aperturaCierreComentario ::= '/'
+aperturaComentarioSimple ::= '@'
+null ::= 'null'
+def ::= 'def'
 
 
 ----------------------------------------------------------------------------------------------------------------------------------------------
@@ -67,7 +70,7 @@ arregloInterno	::= llaveCuadradaAbre (elementoArreglo coma?)* llaveCuadradaCierr
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------
 "Tipo: Comentario"
 comentario ::= comentarioLinea | comentarioMultiple
-comentarioLinea ::= '@' string
+comentarioLinea ::= aperturaComentarioSimple string
 comentarioMultiple ::= aperturaCierreComentario (string saltoLinea*)+ aperturaCierreComentario
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -77,8 +80,8 @@ literal ::= int|float|string|char|arreglo
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 "Funciones"
 
-funcion	::= tipoFuncion Identificador parentesisAbre parentesisCierra llavesCorcheteAbre bloqueCod llavesCorcheteCierra
-funcion	::= tipoFuncion Identificador parentesisAbre (parametro coma?)+ parentesisCierra llavesCorcheteAbre bloqueCod llavesCorcheteCierra
+funcion	::= def tipoFuncion Identificador parentesisAbre parentesisCierra llavesCorcheteAbre bloqueCod llavesCorcheteCierra
+funcion	::= def tipoFuncion Identificador parentesisAbre (parametro coma?)+ parentesisCierra llavesCorcheteAbre bloqueCod llavesCorcheteCierra
 parametro ::= tipoParametro Identificador
 
 invocarFuncion ::= Identificador parentesisAbre parentesisCierra 
@@ -121,11 +124,11 @@ crearVariable ::= tipoVariable Identificador
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 "Crear y asignar variables"
-crearAsignarVariable ::= crearVariable igual ( literal | expresion | Identificador | invocarFuncion | 'null' | arreglo )
+crearAsignarVariable ::= crearVariable igual ( literal | expresion | Identificador | invocarFuncion | null | arreglo )
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 "Sentencias: Asignar variable"
-asignarVariable	::= Identificador igual (literal | expresion | Identificador | invocarFuncion | 'null' | arreglo)
+asignarVariable	::= Identificador igual (literal | expresion | Identificador | invocarFuncion | null | arreglo)
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 "Sentencia: Escribir en salida"

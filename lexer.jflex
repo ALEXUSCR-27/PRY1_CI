@@ -52,10 +52,10 @@ DecIntegerLiteral = 0 | [1-9][0-9]*
 <YYINITIAL> "string" {return symbol(sym.STRING);}
 <YYINITIAL> "char" {return symbol(sym.CHAR);}
 <YYINITIAL> "arreglo" {return symbol(sym.ARREGLO);}
-
 <YYINITIAL> "true" {return symbol(sym.TRUE);}
 <YYINITIAL> "false" {return symbol(sym.FALSE);}
 <YYINITIAL> "@" {return symbol(sym.COMENTARIO_SIMPLE);}
+<YYINITIAL> "def" {return symbol(sym.DEFINICION);}
 
 
 /*Control*/
@@ -63,26 +63,19 @@ DecIntegerLiteral = 0 | [1-9][0-9]*
 <YYINITIAL> "elif" {return symbol(sym.ELIF);}
 <YYINITIAL> "else" {return symbol(sym.ELSE);}
 <YYINITIAL> "while" {return symbol(sym.WHILE);}
-<YYINITIAL> "doWhile" {return symbol(sym.DO_WHILE);} //??
+<YYINITIAL> "do" {return symbol(sym.DO);} //??
 <YYINITIAL> "for" {return symbol(sym.FOR);}
 <YYINITIAL> "break" {return symbol(sym.BREAK);}
 <YYINITIAL> "return" {return symbol(sym.RETURN);}
 <YYINITIAL> "$" {return symbol(sym.FIN_EXPRESION);}//??
 <YYINITIAL> "null" {return symbol(sym.NULL);}
-
 <YYINITIAL> "sysPrint" {return symbol(sym.SYS_PRINT);}
 <YYINITIAL> "sysRead" {return symbol(sym.SYS_READ);}
 
 
-
-
-
-
-
-
 <YYINITIAL> {
     /*identifiers*/
-    {Identifier} {return symbol(sym.IDENTIFIER, yytext();)}
+    {Identificador} {return symbol(sym.IDENTIFICADOR, yytext();)}
 
     /*literals*/
     {DecIntegerLiteral} {return symbol(sym.INTEGER_LITERAL, Integer.parserInt(yytext()));}
@@ -95,10 +88,10 @@ DecIntegerLiteral = 0 | [1-9][0-9]*
     "*"     {return symbol(sym.TIMES);}
     "-"     {return symbol(sym.MINUS);}
     "/"     {return symbol(sym.DIVI);}
-    "("     {return symbol(sym.parentesisAbre);}
-    ")"     {return symbol(sym.parentesisCierra);}
-    "{"     {return symbol(sym.llavesCorcheteAbre);}
-    "}"     {return symbol(sym.llavesCorcheteCierra);}
+    "("     {return symbol(sym.PARENTESISABRE);}
+    ")"     {return symbol(sym.PARENTESISCIERRA);}
+    "{"     {return symbol(sym.LLAVESCORCHETEABRE);}
+    "}"     {return symbol(sym.LLAVESCORCHETECIERRA);}
     ";"     {return symbol(sym.SEMI);}
     ","     {return symbol(sym.COMA);}
     "!"     {return symbol(sym.NEGACION);}
