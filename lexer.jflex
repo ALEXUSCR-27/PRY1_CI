@@ -10,6 +10,7 @@ import java_cup.runtime.*;
 %line
 %column
 
+
 %{
     StringBuffer string = new StringBuffer();
 
@@ -43,7 +44,7 @@ DecIntegerLiteral = 0 | [1-9][0-9]*
 
 %%
 
-/* keywords */ //main?
+/* keywords */
 
 /*Tipos*/
 <YYINITIAL> "bool" {return symbol(sym.BOOL);}
@@ -63,11 +64,11 @@ DecIntegerLiteral = 0 | [1-9][0-9]*
 <YYINITIAL> "elif" {return symbol(sym.ELIF);}
 <YYINITIAL> "else" {return symbol(sym.ELSE);}
 <YYINITIAL> "while" {return symbol(sym.WHILE);}
-<YYINITIAL> "do" {return symbol(sym.DO);} //??
+<YYINITIAL> "do" {return symbol(sym.DO);}
 <YYINITIAL> "for" {return symbol(sym.FOR);}
 <YYINITIAL> "break" {return symbol(sym.BREAK);}
 <YYINITIAL> "return" {return symbol(sym.RETURN);}
-<YYINITIAL> "$" {return symbol(sym.FIN_EXPRESION);}//??
+<YYINITIAL> "$" {return symbol(sym.FIN_EXPRESION);}
 <YYINITIAL> "null" {return symbol(sym.NULL);}
 <YYINITIAL> "sysPrint" {return symbol(sym.SYS_PRINT);}
 <YYINITIAL> "sysRead" {return symbol(sym.SYS_READ);}
@@ -96,7 +97,7 @@ DecIntegerLiteral = 0 | [1-9][0-9]*
     ","     {return symbol(sym.COMA);}
     "!"     {return symbol(sym.NEGACION);}
     "^"     {return symbol(sym.CONJUNCION);}
-    "#"     {return symbol(sym.DISYUNCION)}
+    "#"     {return symbol(sym.DISYUNCION);}
     "--"    {return symbol(sym.MINUSMINUS);}
     "++"    {return symbol(sym.PLUSPLUS);}
     ">"     {return symbol(sym.GREATER_THAN);}

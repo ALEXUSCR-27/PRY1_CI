@@ -1,0 +1,49 @@
+package pry1_ci;
+
+import java_cup.runtime.*;
+
+class sym;
+
+parser code  {: 
+    LexerAC lexer;
+    
+    @SuppressWarnings("deprecation")
+    public parser(LexerAC lexer) {
+        this.lexer = lexer;
+        this.symbolFactory = new DefaultSymbolFactory();
+    }
+:}
+
+
+
+init with {: :};
+scan with {: return lexer.next_token(); :};
+
+
+
+//Terminales
+
+terminal BOOL, INT, FLOAT, STRING, CHAR, ARREGLO, TRUE, FALSE;
+
+terminal COMENTARIO_SIMPLE, FIN_EXPRESION;
+
+terminal IF, ELSE, ELIF, WHILE, DO, FOR, BREAK, RETURN, NULL;
+
+terminal SYS_PRINT, SYS_READ;
+
+terminal IDENTIFICADOR;
+
+terminal EQEQ, PLUS, EQ, TIMES, MINUS, DIVI, NOT_EQ, POWER, MODULO;
+
+terminal PARENTECISABRE, PARENTECISCIERRA, LLAVESCORCHETEABRE, LLAVESCORCHETECIERRA, SEMI, COMA;
+
+terminal NEGACION, CONJUNCION, DISYUNCION, MINUSMINUS, PLUSPLUS, GREATER_THAN, LESS_THAN;
+
+terminal GREATER_THAN_OR_EQ, LESS_THAN_OR_EQ;
+
+terminal STRING_LITERAL;
+
+non terminal ini;
+
+start with ini; \\faltan cositas
+
