@@ -3,8 +3,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
  */
 package pry1_ci;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.Reader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java_cup.runtime.Symbol;
 
 /**
  *
@@ -17,19 +24,36 @@ public class PRY1_CI {
      */
     public static void main(String[] args) throws IOException {
         String r1 = "T:/2023/COMPILADORES/PRYS/PRY1_CI/Netbeans/PRY1_CI/src/pry1_ci/lexer.jflex";
-        String r2 = "T:/2023/COMPILADORES/PRYS/PRY1_CI/Netbeans/PRY1_CI/src/pry1_ci/Parser.cup";
-        Generar(r1, r2);
+        Limpiar();
     }
         
     
-    private static void Generar(String r1, String r2 ) {
+    private static void Limpiar() throws IOException {
+        
+        String raiz, rutaLexer, rutaParser;
+
+        raiz = System.getProperty("user.dir");
+        System.out.println(raiz);
+       
+        rutaLexer = raiz+"\\src\\pry1_ci\\lexer.jflex";
+        rutaParser = raiz+"\\src\\pry1_ci\\Parser.cup";
+        
+        Files.deleteIfExists(Paths.get(raiz+"\\src/pry1_ci\\sym.java"));
+        Files.deleteIfExists(Paths.get(raiz+"\\src/pry1_ci\\Parser.java"));
+        Files.deleteIfExists(Paths.get(raiz+"\\src/pry1_ci\\LexerAC.java"));
+        Generar(rutaLexer, rutaParser);
+        
+        Files.move(Paths.get(raiz+"\\sym.java"), Paths.get(raiz+"\\src\\pry1_ci\\sym.java"));
+        Files.move(Paths.get(raiz+"\\parser.java"), Paths.get(raiz+"\\src\\pry1_ci\\parser.java"));
+        probar();
+    }
+    
+    private static void Generar(String r1, String r2) throws IOException {
         File archivo;
         archivo = new File(r1);
         JFlex.Main.generate(archivo);
-        String[] opciones = {"-parser", "sym","T:/2023/COMPILADORES/PRYS/PRY1_CI/Netbeans/PRY1_CI/src/pry1_ci/Parser.cup" }; 
-        
-       
-        try 
+        String[] opciones = {r2};
+         try 
         {
             java_cup.Main.main(opciones);
         } 
@@ -37,10 +61,12 @@ public class PRY1_CI {
         {
             System.out.print(ex);
         }
+         
     }
     
-    /*private static void probar() throws FileNotFoundException, IOException {
-        Reader reader = new BufferedReader(new FileReader (ruta));
+    private static void probar() throws FileNotFoundException, IOException {
+        String rutaEJ1 = "T:/2023/COMPILADORES/PRYS/PRY1_CI/Netbeans/PRY1_CI/src/pry1_ci/ej.txt";
+        Reader reader = new BufferedReader(new FileReader (rutaEJ1));
         reader.read();
         LexerAC lexer = new LexerAC(reader);
         int i = 0;
@@ -58,6 +84,6 @@ public class PRY1_CI {
             i++;
         }
         
-    }*/
+    }
     
 }

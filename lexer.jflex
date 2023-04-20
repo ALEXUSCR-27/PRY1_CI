@@ -9,6 +9,7 @@ import java_cup.runtime.*;
 %cup
 %line
 %column
+%implements sym
 
 
 %{

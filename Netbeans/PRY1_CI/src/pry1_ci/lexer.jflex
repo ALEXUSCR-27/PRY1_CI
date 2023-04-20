@@ -35,7 +35,7 @@ EndOfLineComment = "//" {InputCharacter}* {LineTerminator}?
 DocumentationComment = "/**" {CommentContent} "*"+ "/"
 CommentContent = ([^*] | \*+ [^/*])*
 
-Identifier = [:jletter:] [:jletterdigit:]*
+Identifier = [:jletter:][:jletterdigit:]*
 
 DecIntegerLiteral = 0 | [1-9][0-9]*
 
@@ -43,7 +43,7 @@ DecIntegerLiteral = 0 | [1-9][0-9]*
 
 %%
 
-/* keywords */ //main?
+/* keywords */
 
 /*Tipos*/
 <YYINITIAL> "bool" {return symbol(sym.BOOL);}
@@ -82,10 +82,10 @@ DecIntegerLiteral = 0 | [1-9][0-9]*
 
 <YYINITIAL> {
     /*identifiers*/
-    {Identifier} {return symbol(sym.IDENTIFIER, yytext();)}
+    {Identifier} { return symbol(sym.IDENTIFIER, yytext()); }
 
     /*literals*/
-    {DecIntegerLiteral} {return symbol(sym.INTEGER_LITERAL, Integer.parserInt(yytext()));}
+    {DecIntegerLiteral} {return symbol(sym.INTEGER_LITERAL, Integer.parseInt(yytext()));}
     \"                  {string.setLength(0); yybegin(CADENA);}
     
     //Operators
@@ -95,15 +95,15 @@ DecIntegerLiteral = 0 | [1-9][0-9]*
     "*"     {return symbol(sym.TIMES);}
     "-"     {return symbol(sym.MINUS);}
     "/"     {return symbol(sym.DIVI);}
-    "("     {return symbol(sym.parentesisAbre);}
-    ")"     {return symbol(sym.parentesisCierra);}
-    "{"     {return symbol(sym.llavesCorcheteAbre);}
-    "}"     {return symbol(sym.llavesCorcheteCierra);}
+    "("     {return symbol(sym.PARENTESISABRE);}
+    ")"     {return symbol(sym.PARENTESISCIERRA);}
+    "{"     {return symbol(sym.LLAVESCORCHETEABRE);}
+    "}"     {return symbol(sym.LLAVESCORCHETECIERRA);}
     ";"     {return symbol(sym.SEMI);}
     ","     {return symbol(sym.COMA);}
     "!"     {return symbol(sym.NEGACION);}
     "^"     {return symbol(sym.CONJUNCION);}
-    "#"     {return symbol(sym.DISYUNCION)}
+    "#"     {return symbol(sym.DISYUNCION);}
     "--"    {return symbol(sym.MINUSMINUS);}
     "++"    {return symbol(sym.PLUSPLUS);}
     ">"     {return symbol(sym.GREATER_THAN);}
