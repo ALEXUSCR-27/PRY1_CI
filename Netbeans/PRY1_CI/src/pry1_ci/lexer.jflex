@@ -102,7 +102,7 @@ DecIntegerLiteral = 0 | [1-9][0-9]*
 <YYINITIAL> {
 
     /*identifiers*/
-    {Identifier} { return symbol(sym.IDENTIFIER, yytext()); }
+    {Identifier} { return symbol(sym.Identificador, yytext()); }
 
     /*literals*/
     {DecIntegerLiteral} {return symbol(sym.INTEGER_LITERAL, Integer.parseInt(yytext()));}

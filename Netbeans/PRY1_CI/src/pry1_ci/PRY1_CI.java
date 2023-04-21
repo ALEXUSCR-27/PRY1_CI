@@ -25,7 +25,7 @@ public class PRY1_CI {
      * @param args the command line arguments
      * @throws java.io.IOException
      */
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, Exception {
         Limpiar();
     }
         
@@ -33,7 +33,7 @@ public class PRY1_CI {
     * Metodo para eliminar los archivos existentes de analisis pasados
     * @throws java.io.IOException
     */
-    private static void Limpiar() throws IOException {
+    private static void Limpiar() throws IOException, Exception {
         
         String raiz, rutaLexer, rutaParser;
 
@@ -51,7 +51,8 @@ public class PRY1_CI {
         
         Files.move(Paths.get(raiz+"\\sym.java"), Paths.get(raiz+"\\src\\pry1_ci\\sym.java"));
         Files.move(Paths.get(raiz+"\\parser.java"), Paths.get(raiz+"\\src\\pry1_ci\\parser.java"));
-        probar();
+        probarLexer();
+        //probarParser();
     }
     
     /**
@@ -78,7 +79,7 @@ public class PRY1_CI {
      * Metodo para realizar el analisis lexico y sintactico del codigo del archivo ej.txt
      * @throws java.io.IOException
     */
-    private static void probar() throws FileNotFoundException, IOException {
+    private static void probarLexer() throws FileNotFoundException, IOException {
         String rutaEJ1 = "src/pry1_ci/ej.txt";
         Reader reader = new BufferedReader(new FileReader (rutaEJ1));
         reader.read();
@@ -118,6 +119,15 @@ public class PRY1_CI {
             i++;
         }
         
+    }
+    
+    private static void probarParser() throws FileNotFoundException, IOException, Exception {
+        String rutaEJ1 = "T:\\2023\\COMPILADORES\\PRYS\\PRY1_CI\\Netbeans\\PRY1_CI\\src\\pry1_ci\\ej.txt";
+        Reader reader = new BufferedReader(new FileReader (rutaEJ1));
+      
+        LexerAC lexer = new LexerAC(reader);
+        parser p = new parser(lexer);
+        p.parse();
     }
     
 }
