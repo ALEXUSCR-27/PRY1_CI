@@ -108,7 +108,7 @@ public class parser extends java_cup.runtime.lr_parser {
     LexerAC lexer;
     
     @SuppressWarnings("deprecation")
-    public Parser(LexerAC lexer) {
+    public void Parser(LexerAC lexer) {
         this.lexer = lexer;
         this.symbolFactory = new DefaultSymbolFactory();
     }

@@ -4,9 +4,11 @@
  */
 package pry1_ci;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Files;
@@ -21,13 +23,16 @@ public class PRY1_CI {
 
     /**
      * @param args the command line arguments
+     * @throws java.io.IOException
      */
     public static void main(String[] args) throws IOException {
-        String r1 = "T:/2023/COMPILADORES/PRYS/PRY1_CI/Netbeans/PRY1_CI/src/pry1_ci/lexer.jflex";
         Limpiar();
     }
         
-    
+    /**
+    * Metodo para eliminar los archivos existentes de analisis pasados
+    * @throws java.io.IOException
+    */
     private static void Limpiar() throws IOException {
         
         String raiz, rutaLexer, rutaParser;
@@ -41,6 +46,7 @@ public class PRY1_CI {
         Files.deleteIfExists(Paths.get(raiz+"\\src/pry1_ci\\sym.java"));
         Files.deleteIfExists(Paths.get(raiz+"\\src/pry1_ci\\Parser.java"));
         Files.deleteIfExists(Paths.get(raiz+"\\src/pry1_ci\\LexerAC.java"));
+        Files.deleteIfExists(Paths.get(raiz+"\\src/pry1_ci\\analisis.txt"));
         Generar(rutaLexer, rutaParser);
         
         Files.move(Paths.get(raiz+"\\sym.java"), Paths.get(raiz+"\\src\\pry1_ci\\sym.java"));
@@ -48,6 +54,10 @@ public class PRY1_CI {
         probar();
     }
     
+    /**
+    * Metodo para generar el Lexer y Parser
+    * @throws java.io.IOException
+    */
     private static void Generar(String r1, String r2) throws IOException {
         File archivo;
         archivo = new File(r1);
@@ -64,21 +74,45 @@ public class PRY1_CI {
          
     }
     
+    /**
+     * Metodo para realizar el analisis lexico y sintactico del codigo del archivo ej.txt
+     * @throws java.io.IOException
+    */
     private static void probar() throws FileNotFoundException, IOException {
-        String rutaEJ1 = "T:/2023/COMPILADORES/PRYS/PRY1_CI/Netbeans/PRY1_CI/src/pry1_ci/ej.txt";
+        String rutaEJ1 = "src/pry1_ci/ej.txt";
         Reader reader = new BufferedReader(new FileReader (rutaEJ1));
         reader.read();
         LexerAC lexer = new LexerAC(reader);
         int i = 0;
         
         Symbol token;
+        String rutaAnalisis = "src/pry1_ci/analisis.txt";
+        
+        File analisis = new File(rutaAnalisis);
+        
+        analisis.createNewFile();
+        FileWriter escribir = new FileWriter(analisis);
+        BufferedWriter buffer = new BufferedWriter(escribir);
+       
         while(true) {
             token = lexer.next_token();
             if(token.sym !=0) {
-                System.out.println("Tokem: "+token.sym+ ", Valor: "+lexer.yytext());
+                String msg = "[Tabla de lexer] Linea: "+lexer.getYYLine()+" Columna: "+lexer.getYYColumn()+" Tokem: "+token.sym+ ", Valor: "+lexer.yytext()+ " ("+sym.terminalNames[token.sym]+")\n";
+                
+                buffer.write(msg);
+                System.out.print(msg);
+                
+                if(!"".equals(lexer.getMsgErr())) {
+                    buffer.write(lexer.getMsgErr()+"\n");
+                }
+                lexer.SetMsgErr();
             }
+          
             else {
-                System.out.println("Cantidad de lexemas encontrados: "+i);
+                String msg = "Cantidad de lexemas encontrados: "+i;
+                buffer.write(msg);
+                buffer.close();
+                System.out.println(msg);
                 return;
             }
             i++;

@@ -1,18 +1,18 @@
+ /_comentario de bloque _/ 
 int main () { 
     int temp = 12 ** residuo(45)$ 
     if (temp == -12){ 
         temp = read()$ temp = temp - --temp$ 
-        break$
+    break$} 
+    else:  
+    { temp = (var+23) > 45 ^ true # otra == dif $ 
     } 
-    else{
-        temp = (var+23) > 45 ^ true # otra == dif $ 
-    } 
-    
+    string miString = “$#%&/()!¡¿??¡?”$ 
     boolean miBool = 2 >= 7$ 
-    int numero = 45 / (34 ~ 4)$ 
+    int numero = 45.5 / (34.0 ~ 4.0)$ 
     print(numero)$ 
-}    
+} 
 @Esto es un comentario de linea 
 int residuo (int num){ 
-    return num + 10 * num$ 
-}
+     return num + 10 * num$ 
+} 

@@ -11,16 +11,37 @@ import java_cup.runtime.*;
 %column
 
 %{
+
+    int line = 1;
+    int column = 1;
+    String msgErr = "";
     StringBuffer string = new StringBuffer();
 
-    private Symbol symbol(int type) {
+    public Symbol symbol(int type) {
         return new Symbol(type, yyline, yycolumn);
     }
 
-    private Symbol symbol(int type, Object value) {
+    public Symbol symbol(int type, Object value) {
         return new Symbol(type, yyline, yycolumn, value);
     }
+
+    public int getYYLine() {
+        return yyline+1;
+    }
+
+    public int getYYColumn() {
+        return yycolumn+1;
+    }
+
+    public String getMsgErr() {
+        return msgErr;
+    }
+
+    public void SetMsgErr() {
+        msgErr = "";
+    }
 %}
+
 
 LineTerminator = \r|\n|\r\n
 InputCharacter = [^\r\n]
@@ -39,9 +60,13 @@ Identifier = [:jletter:][:jletterdigit:]*
 
 DecIntegerLiteral = 0 | [1-9][0-9]*
 
+
 %state CADENA
 
 %%
+
+
+
 
 /* keywords */
 
@@ -74,13 +99,8 @@ DecIntegerLiteral = 0 | [1-9][0-9]*
 <YYINITIAL> "sysRead" {return symbol(sym.SYS_READ);}
 
 
-
-
-
-
-
-
 <YYINITIAL> {
+
     /*identifiers*/
     {Identifier} { return symbol(sym.IDENTIFIER, yytext()); }
 
@@ -122,6 +142,8 @@ DecIntegerLiteral = 0 | [1-9][0-9]*
 
     /*whitespace*/
     {WhiteSpace} {/*ignore*/}
+
+
     
 }
 
@@ -135,7 +157,12 @@ DecIntegerLiteral = 0 | [1-9][0-9]*
     \\r     {string.append('\r');}
     \\\"    {string.append('\"');}
     \\      {string.append('\\');}
+
+
 }
 
-/*error fallback*/
-[^]     {throw new Error("Illegal character <"+ yytext()+">");}
+
+/* error fallback */
+[^]    { msgErr = "[Error lexico] Caracter Ilegal: "+yytext()+"\" en la linea "+(yyline+1)+", columna "+(yycolumn+1);
+        System.err.println(msgErr);
+}

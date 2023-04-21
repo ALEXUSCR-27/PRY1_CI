@@ -6,7 +6,7 @@ parser code  {:
     LexerAC lexer;
     
     @SuppressWarnings("deprecation")
-    public Parser(LexerAC lexer) {
+    public void Parser(LexerAC lexer) {
         this.lexer = lexer;
         this.symbolFactory = new DefaultSymbolFactory();
     }
