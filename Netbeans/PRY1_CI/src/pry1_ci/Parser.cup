@@ -43,13 +43,14 @@ terminal GREATER_THAN_OR_EQ, LESS_THAN_OR_EQ;
 terminal STRING_LITERAL;
 terminal INTEGER_LITERAL;
 
-non terminal ini, inicio;
+non terminal ini, inicio, literal;
 non terminal Integer expr;
 non terminal bloqueCod;
 non terminal funcion, programa;
 non terminal comentario;
 non terminal def, tipoFuncion;
 non terminal parametro, tipoParametro;
+non terminal invocarFuncion, sentencia,estrucControl, return;
 
 /* Precedences */
 precedence left PLUS, MINUS;
@@ -68,3 +69,14 @@ funcion	::= def tipoFuncion Identificador PARENTESISABRE PARENTESISCIERRA LLAVES
           | def tipoFuncion Identificador PARENTESISABRE parametro COMA PARENTESISCIERRA LLAVESCORCHETEABRE bloqueCod LLAVESCORCHETECIERRA
 ;
 parametro ::= tipoParametro Identificador;
+
+invocarFuncion ::= Identificador PARENTESISABRE PARENTESISCIERRA 
+                | Identificador PARENTESISABRE Identificador | literal COMA  PARENTESISCIERRA
+;
+
+literal ::= INT
+            |FLOAT
+            |STRING
+            |CHAR
+            |ARREGLO
+;
